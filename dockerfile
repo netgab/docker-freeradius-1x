@@ -9,6 +9,10 @@ RUN apk update && apk upgrade && \
   apk add --update --no-cache \
   freeradius freeradius-eap openssl bash
 
+## Additional packages (devel only)
+RUN  apk add --update --no-cache \
+  nano
+
 ## Mapping volumes
 #VOLUME \
 #    /opt/db/ \
