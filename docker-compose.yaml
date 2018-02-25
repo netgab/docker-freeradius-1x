@@ -1,6 +1,16 @@
 version: '3'
+
+volumes:
+  raddb:
+  rad1x:
+
 services:
   freeradius-1x:
+    image: netgab/freeradius-1x
+    container_name: freeradius-1x_app
+    volumes:
+      - raddb:/etc/raddb
+      - rad1x:/etc/rad1x
     environment:
       - DOCKER_ENV_CA_PRIVKEY_PASS=45ds2AA3!
     ports:
