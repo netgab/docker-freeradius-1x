@@ -1,7 +1,0 @@
-
-        #  Invoke the default supported EAP type when
-        #  EAP-Identity response is received.
-        default_eap_type = tls
-        timer_expire     = 60
-        ignore_unknown_eap_types = no
-        cisco_accounting_username_bug = no

@@ -4,6 +4,9 @@
 *.sql
 *.sqlite
 
+# Backup files #
+*.save
+
 # OS generated files #
 ######################
 .DS_Store

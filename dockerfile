@@ -14,7 +14,7 @@ RUN  apk add --update --no-cache \
   nano
 
 ## Create files and directories
-RUN mkdir -p /etc/rad1x/scripts 
+RUN mkdir -p /etc/rad1x/scripts
 
 ## Mapping volumes
 #VOLUME \
@@ -26,9 +26,9 @@ EXPOSE \
     1813
 
 COPY *.sh /etc/rad1x/scripts/
+COPY config /etc/rad1x/config/
 
-#ENTRYPOINT ["/etc/rad1x/scripts/initial_provisioning.sh"]
+ENTRYPOINT [/etc/rad1x/scripts/initial_provisioning.sh]
 
-#CMD ["radiusd","-xx","-f"]
-CMD ["radiusd","-X","-f"]
+CMD ["radiusd","-xx","-f"]
 
