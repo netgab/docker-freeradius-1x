@@ -106,5 +106,8 @@ if [ ! -f $FR1X_FILE_PROVISIONED ]; then
     echo "[DEBUG] cp -r $FR1X_CONFDIR/freeradius/ $FRAD_BASEDIR"
     cp -r $FR1X_CONFDIR/freeradius/* $FRAD_BASEDIR
 
+    # Set the provisioned flag
+    touch $FR1X_FILE_PROVISIONED
 fi
 
+exec "$@"

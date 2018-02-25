@@ -28,7 +28,7 @@ EXPOSE \
 COPY *.sh /etc/rad1x/scripts/
 COPY config /etc/rad1x/config/
 
-ENTRYPOINT [/etc/rad1x/scripts/initial_provisioning.sh]
+ENTRYPOINT ["/bin/bash", "/etc/rad1x/scripts/initial_provisioning.sh"]
 
-CMD ["radiusd","-xx","-f"]
+CMD ["radiusd","-Xx","-f"]
 
