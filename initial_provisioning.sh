@@ -23,10 +23,13 @@ trap onExit EXIT
 
 ## Basic variables and settings
 # General variables
-readonly FR1X_BASEDIR=/etc/rad1x
+readonly FR1X_BASEDIR=/etc/rad1x/
+readonly FR1X_CADIR=ca
+readonly FR1X_CA_RSA_KEYSIZE=4096
 readonly FR1X_FILE_PROVISIONED=.provisioned_1x
 
 # Server certificate for EAP-TLS, TTLS and PEAP
+readonly CERT_CA_BASEDIR=
 readonly CERT_SERVER_RSA_KEYSIZE=2048
 readonly CERT_SERVER_VALIDITY_DAYS=730
 readonly CERT_SERVER_SUBJECT="/OU=Example certificate/CN=freeradius"
@@ -43,8 +46,15 @@ FRAD_DIR_CERT=/etc/raddb/certs
 ## Begin script
 # Check if this is a fresh installation
 
-if [ ! -f $FR1X_BASEDIR/FR1X_FILE_PROVISIONED  ]; then
-    echo "File not found!"
+if [ ! -f "$FR1X_BASEDIR/$FR1X_FILE_PROVISIONED"  ]; then
+    echo "Fresh installation detected (absence of file $FR1X_BASEDIR/$FR1X_FILE_PROVISIONED)"
+    echo "Start provisioning ..."
+    if [ ! -d "$FR1X_BASEDIR" ]; then
+      mkdir $FR1X_BASEDIR
+    fi
+
+    echo "Creating CA and SSL server certificate ..."
+
 fi
 
 
