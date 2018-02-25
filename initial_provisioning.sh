@@ -23,13 +23,12 @@ trap onExit EXIT
 
 ## Basic variables and settings
 # General variables
-readonly FR1X_BASEDIR=/etc/rad1x/
-readonly FR1X_CADIR=ca
+readonly FR1X_BASEDIR=/etc/rad1x
+readonly FR1X_CADIR=$FR1X_BASEDIR/CA
 readonly FR1X_CA_RSA_KEYSIZE=4096
 readonly FR1X_FILE_PROVISIONED=.provisioned_1x
 
 # Server certificate for EAP-TLS, TTLS and PEAP
-readonly CERT_CA_BASEDIR=
 readonly CERT_SERVER_RSA_KEYSIZE=2048
 readonly CERT_SERVER_VALIDITY_DAYS=730
 readonly CERT_SERVER_SUBJECT="/OU=Example certificate/CN=freeradius"
@@ -54,6 +53,16 @@ if [ ! -f "$FR1X_BASEDIR/$FR1X_FILE_PROVISIONED"  ]; then
     fi
 
     echo "Creating CA and SSL server certificate ..."
+    mkdir $FR1X_CADIR
+    mkdir $FR1X_CADIR/certs $FR1X_CADIR/private $FR1X_CADIR/crl
+    # Create index file and initial serial number
+    touch $FR1X_CADIR/index.txt
+    echo '100001' >$FR1X_CADIR/serial
+    # Create CRL file and initial serial number
+    touch $FR1X_CADIR/crlnumber
+    echo '100001' >$FR1X_CADIR/serial
+
+    # Get new OpenSSL configuration file from Git
 
 fi
 

@@ -25,6 +25,10 @@ EXPOSE \
     1812/udp \
     1813
 
-COPY *.sh /etc/rad1x/scripts
+COPY *.sh /etc/rad1x/scripts/
 
-CMD ["radiusd","-xx","-f"]
+#ENTRYPOINT ["/etc/rad1x/scripts/initial_provisioning.sh"]
+
+#CMD ["radiusd","-xx","-f"]
+CMD ["radiusd","-X","-f"]
+
