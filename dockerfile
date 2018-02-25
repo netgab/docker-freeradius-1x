@@ -13,6 +13,9 @@ RUN apk update && apk upgrade && \
 RUN  apk add --update --no-cache \
   nano
 
+## Create files and directories
+RUN mkdir -p /etc/rad1x/scripts 
+
 ## Mapping volumes
 #VOLUME \
 #    /opt/db/ \
@@ -21,5 +24,7 @@ RUN  apk add --update --no-cache \
 EXPOSE \
     1812/udp \
     1813
+
+COPY *.sh /etc/rad1x/scripts
 
 CMD ["radiusd","-xx","-f"]
