@@ -1,0 +1,9 @@
+version: '3'
+services:
+  freeradius-1x:
+    build: .
+    environment:
+      - DOCKER_ENV_CA_PRIVKEY_PASS=45ds2AA3!
+    ports:
+     - "1812:1812"
+     - "1813:1813" 
