@@ -16,6 +16,9 @@ The docker image is initially provisioned (first time only) with:
   * Tuned "eap" config file (mods-available) to support EAP-TLS and PEAP only
   * Tunel "sites-available / default" config file to support EAP-TLS and PEAP only
 
+Link to docker hub: https://hub.docker.com/r/netgab/freeradius-1x/
+
+
 ## Quick start
 To run the docker container "ready-to-use" with the demoCA and SSL server certificates
 ```
