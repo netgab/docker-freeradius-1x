@@ -16,7 +16,8 @@ The docker image is initially provisioned (first time only) with:
 ## Quick start
 To run the docker container "ready-to-use" with the demoCA and SSL server certificates
 ```
-docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" -p 1812:1812/udp -p 1813:1813/udp -v /etc/raddb freeradius-1x
+docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
+-p 1812:1812/udp -p 1813:1813/udp -v /etc/raddb freeradius-1x
 ```
 The environment variable DOCKER_ENV_CA_PRIVKEY_PASS sets the private key passphrase for the CA:
 Please change "myPassPhrase" to another secret only known to you!
