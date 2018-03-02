@@ -60,10 +60,6 @@ docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
 -v /etc/raddb -v /etc/rad1x/CA freeradius-1x
 ```
 
-The CA has the following docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
--p 1812:1812/udp -p 1813:1813/udp \
--v /etc/raddb -v /etc/rad1x/CA freeradius-1x
-
 ### CA preconfiguration 
 * CA
   * Private key size (RSA): 4096 Bit
