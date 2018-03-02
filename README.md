@@ -32,6 +32,7 @@ Please put your own SSL server certificate, private key and CA chain into the /e
 * SSL server certificate: /etc/raddb/server.pem
 * SSL server private key: /etc/raddb/server.key
 * CA certificate chain: /etc/raddb/ca.pem
+
 If your private key is protected by a passphrase please adjust the file /etc/raddb/mods-available/eap
 The parameter "private_key_password" must be uncommented and the private key must be set.
 ```
