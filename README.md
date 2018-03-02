@@ -1,6 +1,9 @@
 
 # docker-freeradius-1x
 
+## Dislaimer
+Im still in the development and documentation phase of the container.
+
 ## Introduction
 docker-freeradius-1x is a freeradius server based on Alpine Linux.
 The primary use case is 802.1X using EAP-TLS and PEAP.
@@ -36,9 +39,34 @@ Please put your own SSL server certificate, private key and CA chain into the /e
 If your private key is protected by a passphrase please adjust the file /etc/raddb/mods-available/eap
 The parameter "private_key_password" must be uncommented and the private key must be set.
 ```
+[...]
 tls-config tls-common {
+  [...]
   private_key_password = whatever
+  [...]
 ```
 
+## DemoCA
+The demoCA is based on openSSL and is stored in /etc/rad1x/CA.
+If the demoCA should be used in production (not really recommended), the CA directory must be exposed as well
 
+Example:
+```
+docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
+-p 1812:1812/udp -p 1813:1813/udp \
+-v /etc/raddb -v /etc/rad1x/CA freeradius-1x
+```
 
+The CA has the following docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
+-p 1812:1812/udp -p 1813:1813/udp \
+-v /etc/raddb -v /etc/rad1x/CA freeradius-1x
+
+### CA preconfiguration 
+* CA
+  * Private key size (RSA): 4096 Bit
+  * Private key passphrase: Set via environmental variable DOCKER_ENV_CA_PRIVKEY_PASS
+  * Validity: 3650 days (10 years)
+* freeradius server certificate
+  * Private key size (RSA): 4096 Bit
+  * Hash algorithm: SHA256
+  * Validity: 730 days (2 years)
