@@ -66,36 +66,43 @@ if [ ! -f $FR1X_FILE_PROVISIONED ]; then
       mkdir $FR1X_BASEDIR
     fi
 
-    echo "Creating CA in $FR1X_CADIR ..."
-    if [ ! -d "$FR1X_CADIR" ]; then
-      mkdir $FR1X_CADIR
+
+    # Checking if environmental variable for CA creation is set
+    # If not, skip the CA creation process
+    if  [ ! -v ${DOCKER_ENV_CA_PRIVKEY_PASS:-} ]; then
+      echo "Creating CA in $FR1X_CADIR ..."
+      if [ ! -d "$FR1X_CADIR" ]; then
+        mkdir $FR1X_CADIR
+      fi
+      mkdir $FR1X_CADIR/certs $FR1X_CADIR/private $FR1X_CADIR/crl $FR1X_CADIR/newcerts
+      # Create index file and initial serial number
+      touch $FR1X_CADIR/index.txt
+      echo '100001' >$FR1X_CADIR/serial
+      # Create CRL file and initial serial number
+      touch $FR1X_CADIR/crlnumber
+      echo '100001' >$FR1X_CADIR/serial
+
+      # Create CA certificate
+      openssl req -config $FR1X_CA_OPENSSLCNF -new -passout env:$FR1X_ENV_CA_PRIVKEY_PASS -newkey rsa:$FR1X_CA_RSA_KEYSIZE -x509 \
+        -keyout $FR1X_CA_PRIVKEY -out $FR1X_CA_CERT -days $FR1X_CA_VALIDITY_DAYS \
+        -subj "/$FR1X_CA_SUBJECT" -extensions v3_ca
+
+      # Create freeradius server certificate CSR
+      echo "Creating SSL server certificate in $FRAD_DIR_CERT ..."
+      openssl req -config $FR1X_CA_OPENSSLCNF -nodes -newkey rsa:$CERT_SERVER_RSA_KEYSIZE \
+        -keyout $CERT_SERVER_KEYFILE -out /tmp/server.csr -subj "$CERT_SERVER_SUBJECT"
+
+      # Sign CSR
+      openssl ca -batch -config $FR1X_CA_OPENSSLCNF -policy policy_anything \
+        -passin env:$FR1X_ENV_CA_PRIVKEY_PASS \
+        -out $CERT_SERVER_CERTFILE -in /tmp/server.csr -days $CERT_SERVER_VALIDITY_DAYS \
+        -extensions rad1x_ssl_server
+
+      # Copy CA cert to freeradius cert folder
+      cp $FR1X_CA_CERT $CERT_SERVER_CAFILE
+    else
+      echo "no CA private key passphrase set (environmental variable $FR1X_ENV_CA_PRIVKEY_PASS) ... skipping demo CA creation"
     fi
-    mkdir $FR1X_CADIR/certs $FR1X_CADIR/private $FR1X_CADIR/crl $FR1X_CADIR/newcerts
-    # Create index file and initial serial number
-    touch $FR1X_CADIR/index.txt
-    echo '100001' >$FR1X_CADIR/serial
-    # Create CRL file and initial serial number
-    touch $FR1X_CADIR/crlnumber
-    echo '100001' >$FR1X_CADIR/serial
-
-    # Create CA certificate
-    openssl req -config $FR1X_CA_OPENSSLCNF -new -passout env:$FR1X_ENV_CA_PRIVKEY_PASS -newkey rsa:$FR1X_CA_RSA_KEYSIZE -x509 \
-      -keyout $FR1X_CA_PRIVKEY -out $FR1X_CA_CERT -days $FR1X_CA_VALIDITY_DAYS \
-      -subj "/$FR1X_CA_SUBJECT" -extensions v3_ca
-
-    # Create freeradius server certificate CSR
-    echo "Creating SSL server certificate in $FRAD_DIR_CERT ..."
-    openssl req -config $FR1X_CA_OPENSSLCNF -nodes -newkey rsa:$CERT_SERVER_RSA_KEYSIZE \
-      -keyout $CERT_SERVER_KEYFILE -out /tmp/server.csr -subj "$CERT_SERVER_SUBJECT"
-
-    # Sign CSR
-    openssl ca -batch -config $FR1X_CA_OPENSSLCNF -policy policy_anything \
-      -passin env:$FR1X_ENV_CA_PRIVKEY_PASS \
-      -out $CERT_SERVER_CERTFILE -in /tmp/server.csr -days $CERT_SERVER_VALIDITY_DAYS \
-      -extensions rad1x_ssl_server
-
-    # Copy CA cert to freeradius cert folder
-    cp $FR1X_CA_CERT $CERT_SERVER_CAFILE
 
     # Create Diffie-Hellman nonce file
     echo "Creating Diffie-Hellman nonce file. CAUTION: This may take a while ..."

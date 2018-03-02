@@ -10,8 +10,8 @@ RUN apk update && apk upgrade && \
   freeradius freeradius-eap openssl bash
 
 ## Additional packages (devel only)
-RUN  apk add --update --no-cache \
-  nano
+#RUN  apk add --update --no-cache \
+#  nano
 
 ## Create files and directories
 RUN mkdir -p /etc/rad1x/scripts
@@ -23,7 +23,7 @@ RUN mkdir -p /etc/rad1x/scripts
 
 EXPOSE \
     1812/udp \
-    1813
+    1813/udp
 
 COPY *.sh /etc/rad1x/scripts/
 COPY config /etc/rad1x/config/
