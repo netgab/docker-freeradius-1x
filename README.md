@@ -24,7 +24,7 @@ Link to docker hub: https://hub.docker.com/r/netgab/freeradius-1x/
 To run the docker container "ready-to-use" with the demoCA and SSL server certificates
 ```
 docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
--p 1812:1812/udp -p 1813:1813/udp -v /etc/raddb -v /etc/rad1x freeradius-1x
+-p 1812:1812/udp -p 1813:1813/udp -v /etc/raddb -v /etc/rad1x netgab/freeradius-1x
 ```
 The environment variable DOCKER_ENV_CA_PRIVKEY_PASS sets the private key passphrase for the CA:
 Please change "myPassPhrase" to another secret only known to you!
@@ -32,7 +32,7 @@ Please change "myPassPhrase" to another secret only known to you!
 
 To run the docker container without a prebuild demo CA without SSL server certificates 
 ```
-docker run -d -p 1812:1812/udp -p 1813:1813/udp -v /etc/raddb -v /etc/rad1x freeradius-1x
+docker run -d -p 1812:1812/udp -p 1813:1813/udp -v /etc/raddb -v /etc/rad1x netgab/freeradius-1x
 ```
 The absence of the environment variable DOCKER_ENV_CA_PRIVKEY_PASS indicates that you don't want a demo CA.
 Please put your own SSL server certificate, private key and CA chain into the /etc/raddb/certs directory.
@@ -88,7 +88,7 @@ Example:
 ```
 docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
 -p 1812:1812/udp -p 1813:1813/udp \
--v /etc/raddb -v /etc/rad1x freeradius-1x
+-v /etc/raddb -v /etc/rad1x netgab/freeradius-1x
 ```
 
 ### CA preconfiguration 
