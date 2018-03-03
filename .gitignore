@@ -7,9 +7,6 @@
 # Backup files #
 *.save
 
-# Devel files #
-devel*
-
 # OS generated files #
 ######################
 .DS_Store
