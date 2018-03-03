@@ -20,6 +20,7 @@ Link to docker hub: https://hub.docker.com/r/netgab/freeradius-1x/
 
 
 ## Quick start
+### Starting container
 To run the docker container "ready-to-use" with the demoCA and SSL server certificates
 ```
 docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
@@ -48,6 +49,18 @@ tls-config tls-common {
   private_key_password = whatever
   [...]
 ```
+
+### Changing settings
+Basically it's freeradius, right? So I recommend reading the freeradius 3 documentation.
+Here are some little hints how to start:
+
+#### File: /etc/raddb/clients.conf
+
+
+
+
+
+
 
 ## DemoCA
 The demoCA is based on openSSL and is stored in /etc/rad1x/CA.
