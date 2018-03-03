@@ -24,7 +24,7 @@ Link to docker hub: https://hub.docker.com/r/netgab/freeradius-1x/
 To run the docker container "ready-to-use" with the demoCA and SSL server certificates
 ```
 docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
--p 1812:1812/udp -p 1813:1813/udp -v /etc/raddb freeradius-1x
+-p 1812:1812/udp -p 1813:1813/udp -v /etc/raddb -v /etc/rad1x freeradius-1x
 ```
 The environment variable DOCKER_ENV_CA_PRIVKEY_PASS sets the private key passphrase for the CA:
 Please change "myPassPhrase" to another secret only known to you!
@@ -32,7 +32,7 @@ Please change "myPassPhrase" to another secret only known to you!
 
 To run the docker container without a prebuild demo CA without SSL server certificates 
 ```
-docker run -d -p 1812:1812/udp -p 1813:1813/udp -v /etc/raddb freeradius-1x
+docker run -d -p 1812:1812/udp -p 1813:1813/udp -v /etc/raddb -v /etc/rad1x freeradius-1x
 ```
 The absence of the environment variable DOCKER_ENV_CA_PRIVKEY_PASS indicates that you don't want a demo CA.
 Please put your own SSL server certificate, private key and CA chain into the /etc/raddb/certs directory.
@@ -52,15 +52,33 @@ tls-config tls-common {
 
 ### Changing settings
 Basically it's freeradius, right? So I recommend reading the freeradius 3 documentation.
+However, if you change config files, you need to restart the freeradius service afterwards:
+
+```
+docker restart <CONTAINER>
+```
+
 Here are some little hints how to start:
 
 #### File: /etc/raddb/clients.conf
+Create at least on entry for the RADIUS clients in that file (e.g. switches, AP, WLC)
+Example:
+```
+client myAP {
+       ipaddr          = 192.0.2.1
+       secret          = testing123
+}
+```
 
-
-
-
-
-
+#### File: /etc/raddb/clients.conf
+Create at least on entry for the RADIUS clients in that file (e.g. switches, AP, WLC)
+Example:
+```
+client myAP {
+       ipaddr          = 192.0.2.1
+       secret          = testing123
+}
+```
 
 ## DemoCA
 The demoCA is based on openSSL and is stored in /etc/rad1x/CA.
@@ -70,7 +88,7 @@ Example:
 ```
 docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
 -p 1812:1812/udp -p 1813:1813/udp \
--v /etc/raddb -v /etc/rad1x/CA freeradius-1x
+-v /etc/raddb -v /etc/rad1x freeradius-1x
 ```
 
 ### CA preconfiguration 
