@@ -69,3 +69,8 @@ docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
   * Private key size (RSA): 4096 Bit
   * Hash algorithm: SHA256
   * Validity: 730 days (2 years)
+
+For EAP-TLS and PEAP, your clients must trust the CA root cert in /etc/rad1x/CA/ca.pem
+(For Windows, just change the file extension from .pem to .crt).
+
+:warning: As of today there is no OCSP or CRL support. I guess another separate container for this makes sense in the future :warning:
