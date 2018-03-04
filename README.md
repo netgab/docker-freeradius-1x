@@ -50,11 +50,17 @@ tls-config tls-common {
   [...]
 ```
 
-:bulb: Recommendation:
+:bulb: **Recommendation:**
 I recommend using the `--network <OWN-NETWORK-NAME>` when running the container. I have also an eapol testing container (https://github.com/netgab/eapol_tester)
 and it's very useful to put the 802.1X EAP test app into the same user-defined network bridge as the RADIUS server, because name resolution
 between these containers works automatically. Therefore, handling of the `clients.conf` file and the RADIUS server within the test container becomes more easy.  
 
+Example:
+```
+docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
+-p 1812:1812/udp -p 1813:1813/udp -v /etc/raddb -v /etc/rad1x \
+**--network freerad-1x** netgab/freeradius-1x
+```
 
 ### Changing settings
 Basically it's freeradius, right? So I recommend reading the freeradius 3 documentation.
