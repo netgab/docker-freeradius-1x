@@ -144,7 +144,7 @@ docker-compose logs
 
 ** Open bash of running freeradius-1x container **
 ```
-docker-compose run freeradius-1x /bin/bash
+docker-compose exec freeradius-1x /bin/bash
 ```
 
 
