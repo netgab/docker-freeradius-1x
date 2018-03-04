@@ -51,17 +51,10 @@ tls-config tls-common {
 ```
 
 :bulb: **Recommendation:**
-I recommend using the `--network <OWN-NETWORK-NAME>` when running the container. I have also an eapol testing container (https://github.com/netgab/eapol_tester)
-and it's very useful to put the 802.1X EAP test app into the same user-defined network bridge as the RADIUS server, because name resolution
-between these containers works automatically. Therefore, handling of the `clients.conf` file and the RADIUS server within the test container becomes more easy.  
-
-Example:
-<pre>
-docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
--p 1812:1812/udp -p 1813:1813/udp -v /etc/raddb -v /etc/rad1x \
-<b>--network net_freerad-1x --name freerad-1x </b>netgab/freeradius-1x
-</pre>
-
+I recommend using the a user defined bridging network when running the container. I have also an eapol testing container (https://github.com/netgab/eapol_tester)
+and it's very useful to put the 802.1X EAP test app into the same user-defined network bridge as the RADIUS server, because of the built-in name resolution
+between the containers. Therefore, handling of the `clients.conf` file and the RADIUS server within the test container becomes more easy.
+It's very easy using **docker-compose** for this. See below for docker-compose files.
 
 ### Changing settings
 Basically it's freeradius, right? So I recommend reading the freeradius 3 documentation.
@@ -126,3 +119,32 @@ For EAP-TLS and PEAP, your clients must trust the CA root cert in /etc/rad1x/CA/
 (For Windows, just change the file extension from .pem to .crt).
 
 :warning: As of today there is no OCSP or CRL support. I guess another separate container for this makes sense in the future :warning:
+
+## Docker-compose
+From my point of view it's a good idea using docker-compose to manage the containers.
+Especially when using the eapol_test container (RADIUS test client) to enable name resolution between the containers.
+
+### docker-compose example with DemoCA
+```
+
+
+
+```
+
+
+
+
+### Troubleshoot with docker-compose
+Change to directory with the docker-compose file:
+
+** View logs **
+```
+docker-compose logs
+```
+
+** Open bash of running freeradius-1x container **
+```
+docker-compose run freeradius-1x /bin/bash
+```
+
+
