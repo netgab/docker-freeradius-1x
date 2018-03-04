@@ -132,17 +132,15 @@ Especially when using the eapol_test container (RADIUS test client) to enable na
 ```
 
 
-
-
 ### Troubleshoot with docker-compose
 Change to directory with the docker-compose file:
 
-** View logs **
+**View logs**
 ```
 docker-compose logs
 ```
 
-** Open bash of running freeradius-1x container **
+**Open bash of running freeradius-1x container**
 ```
 docker-compose exec freeradius-1x /bin/bash
 ```
