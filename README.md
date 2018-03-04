@@ -56,11 +56,12 @@ and it's very useful to put the 802.1X EAP test app into the same user-defined n
 between these containers works automatically. Therefore, handling of the `clients.conf` file and the RADIUS server within the test container becomes more easy.  
 
 Example:
-```
+<pre>
 docker run -d -e "DOCKER_ENV_CA_PRIVKEY_PASS=myPassPhrase" \
 -p 1812:1812/udp -p 1813:1813/udp -v /etc/raddb -v /etc/rad1x \
-**--network freerad-1x** netgab/freeradius-1x
-```
+<b>--network net_freerad-1x --name freerad-1x </b>netgab/freeradius-1x
+</pre>
+
 
 ### Changing settings
 Basically it's freeradius, right? So I recommend reading the freeradius 3 documentation.
