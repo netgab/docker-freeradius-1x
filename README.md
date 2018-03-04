@@ -50,6 +50,12 @@ tls-config tls-common {
   [...]
 ```
 
+:bulb: Recommendation:
+I recommend using the `--network <OWN-NETWORK-NAME>` when running the container. I have also an eapol testing container (https://github.com/netgab/eapol_tester)
+and it's very useful to put the 802.1X EAP test app into the same user-defined network bridge as the RADIUS server, because name resolution
+between these containers works automatically. Therefore, handling of the `clients.conf` file and the RADIUS server within the test container becomes more easy.  
+
+
 ### Changing settings
 Basically it's freeradius, right? So I recommend reading the freeradius 3 documentation.
 However, if you change config files, you need to restart the freeradius service afterwards:
@@ -78,6 +84,14 @@ client myAP {
        ipaddr          = 192.0.2.1
        secret          = testing123
 }
+```
+### Troubleshoot
+In case the container does stop immediately after starting, a failure in the freeradius configuration
+files might be the reason. Try starting the container attached and interactive to troubleshoot.
+You'll get the verbose loggin from freeradius on your shell:
+
+```
+docker start -ai <CONTAINER-ID>
 ```
 
 ## DemoCA
