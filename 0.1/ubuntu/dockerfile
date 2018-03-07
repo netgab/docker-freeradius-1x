@@ -19,7 +19,7 @@ EXPOSE \
     1812/udp \
     1813/udp
 
-COPY *.sh /opt/rad1x/scripts/
-COPY config /opt/rad1x/config/
+#COPY *.sh /opt/rad1x/scripts/
+#COPY config /opt/rad1x/config/
 
 ENTRYPOINT ["/bin/bash", "/etc/rad1x/scripts/initial_provisioning.sh"]

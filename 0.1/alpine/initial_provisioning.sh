@@ -53,8 +53,8 @@ readonly CERT_SERVER_CERTFILE=$FRAD_DIR_CERT/server.pem
 readonly CERT_SERVER_KEYFILE=$FRAD_DIR_CERT/server.key
 readonly CERT_SERVER_CAFILE=$FRAD_DIR_CERT/ca.pem
 readonly FRAD_FILE_DH=$FRAD_DIR_CERT/dh
-readonly FRAD_DH_KEYSIZE=4096
-#readonly FRAD_DH_KEYSIZE=1024
+#readonly FRAD_DH_KEYSIZE=4096
+readonly FRAD_DH_KEYSIZE=1024
 
 ## Begin script
 # Check if this is a fresh installation

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LABEL_DEVEL="development"
-TAG="freeradius-1x:0.1-ubuntu"
+TAG="netgab/freeradius-1x:0.1-ubuntu"
 
 # Rebuild image
 docker build --tag $TAG .
