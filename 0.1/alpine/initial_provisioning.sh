@@ -109,9 +109,9 @@ if [ ! -f $FR1X_FILE_PROVISIONED ]; then
     openssl dhparam -check -text -5 $FRAD_DH_KEYSIZE -out $FRAD_FILE_DH
 
     # Copy config files in rad1x config directory
-    echo "Copy config files in rad1x config directory to freeradius config"
-    echo "[DEBUG] cp -r $FR1X_CONFDIR/freeradius/ $FRAD_BASEDIR"
-    cp -r $FR1X_CONFDIR/freeradius/* $FRAD_BASEDIR
+    #echo "Copy config files in rad1x config directory to freeradius config"
+    #echo "[DEBUG] cp -r $FR1X_CONFDIR/freeradius/ $FRAD_BASEDIR"
+    #cp -r $FR1X_CONFDIR/freeradius/* $FRAD_BASEDIR
 
     # Set the provisioned flag
     touch $FR1X_FILE_PROVISIONED

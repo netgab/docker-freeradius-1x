@@ -331,8 +331,7 @@ authorize {
         #  the MS-CHAP-Challenge attribute, and add 'Auth-Type := MS-CHAP'
         #  to the request, which will cause the server to then use
         #  the mschap module for authentication.
-        ### Modified by freeradius_1x: Disable plaintext MSCHAP completely
-		#mschap
+        mschap
 
         #
         #  If you have a Cisco SIP server authenticating against
@@ -504,10 +503,9 @@ authenticate {
 
         #
         #  MSCHAP authentication.
-        ### Modified by freeradius_1x: Disable plaintext MS-CHAP completely
-		# Auth-Type MS-CHAP {
-        #         mschap
-        # }
+	Auth-Type MS-CHAP {
+             mschap
+        }
 
         #
         #  For old names, too.
