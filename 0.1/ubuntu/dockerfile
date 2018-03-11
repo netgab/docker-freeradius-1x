@@ -6,20 +6,12 @@ MAINTAINER Johannes Luther <joe@netgab.net>
 
 ## Install packages and dependencies
 RUN apt-get update && apt-get install -y \
-      bash \
-      nano \
       freeradius \
       openssl && \
       rm -rf /var/lib/apt/lists/*
-
-## Create files and directories
-RUN mkdir -p /opt/rad1x/scripts
 
 EXPOSE \
     1812/udp \
     1813/udp
 
-#COPY *.sh /opt/rad1x/scripts/
-#COPY config /opt/rad1x/config/
-
-ENTRYPOINT ["/bin/bash", "/etc/rad1x/scripts/initial_provisioning.sh"]
+CMD ["freeradius","-fxX"]
